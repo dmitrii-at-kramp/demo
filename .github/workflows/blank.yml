@@ -1,4 +1,4 @@
-name: CICD
+name: CICD Build
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
@@ -58,7 +58,7 @@ jobs:
           draft: false
           prerelease: false
           release_name: ${{ steps.version.outputs.version }}
-          tag_name: v${{github.run_number}}
+          tag_name: 'v${{github.run_number}}'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           - run: echo "The job ${{github.job}} Deployed in Prod"
