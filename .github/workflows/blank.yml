@@ -16,13 +16,10 @@ jobs:
     needs: [Build, Deploy-Build]
     steps:
       - run: echo "The job ${{github.job}} was started"
-  Deploy-Dev:
-    runs-on: ubuntu-latest
+  PrepareRelease:
     needs: [Build, Deploy-Build, Test]
-    environment:
-      name: Dev
+    runs-on: ubuntu-latest
     steps:
-      - run: echo "The job ${{github.job}} was started"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -37,3 +34,24 @@ jobs:
             - Second Change
           draft: false
           prerelease: false
+  Deploy-Dev:
+    runs-on: ubuntu-latest
+    needs: [PrepareRelease]
+    environment:
+      name: Dev
+    steps:
+      - run: echo "The job ${{github.job}} was started"
+  Deploy-Test:
+    runs-on: ubuntu-latest
+    needs: [PrepareRelease]
+    environment:
+      name: Test
+    steps:
+      - run: echo "The job ${{github.job}} was started"
+  Deploy-Prod:
+    runs-on: ubuntu-latest
+    needs: [PrepareRelease]
+    environment:
+      name: Prod
+    steps:
+      - run: echo "The job ${{github.job}} was started"
