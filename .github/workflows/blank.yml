@@ -19,6 +19,7 @@ jobs:
   PrepareRelease:
     #needs: [Build, Deploy-Build, Test]
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
         - name: release
           uses: actions/create-release@v1
